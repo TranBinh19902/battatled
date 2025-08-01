@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>LED Control</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h1>Chọn hiệu ứng LED</h1>
+  <div class="button-grid">
+    {% for i in range(6) %}
+      <button onclick="sendEffect({{ i }})">Hiệu ứng {{ i + 1 }}</button>
+    {% endfor %}
+  </div>
+  <script>
+    function sendEffect(effectId) {
+      fetch('/set-effect/' + effectId, { method: 'POST' })
+        .then(res => res.json())
+        .then(data => alert("ESP32: " + data.esp_response))
+        .catch(err => alert("Không gửi được lệnh!"));
+    }
+  </script>
+</body>
+</html>
